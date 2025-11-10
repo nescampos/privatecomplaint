@@ -22,6 +22,9 @@ import { type Wallet } from "@midnight-ntwrk/wallet-api";
 import chalk from "chalk";
 import { MidnightProviders } from "./providers/midnight-providers.js";
 import { EnvironmentManager } from "./utils/environment.js";
+export type { PrivateState } from "./witnesses.js";
+import { witnesses } from "./witnesses.js";
+export { createPrivateState } from "./witnesses.js";
 
 // Fix WebSocket for Node.js environment
 // @ts-ignore
@@ -123,6 +126,7 @@ async function main() {
     // Load compiled contract files
     console.log(chalk.gray("📦 Loading contract..."));
     const contractPath = path.join(process.cwd(), "contracts");
+    
     const contractModulePath = path.join(
       contractPath,
       "managed",
@@ -130,9 +134,11 @@ async function main() {
       "contract",
       "index.cjs"
     );
-
-    const HelloWorldModule = await import(contractModulePath);
-    const contractInstance = new HelloWorldModule.Contract({});
+    
+    const HelloWorldModule = await import("file:///"+contractModulePath);
+    
+    const contractInstance = new HelloWorldModule.Contract(witnesses);
+    
 
     // Create wallet provider for transactions
     const walletState = await Rx.firstValueFrom(wallet.state());
