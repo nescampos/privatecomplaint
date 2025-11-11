@@ -135,7 +135,8 @@ async function main() {
       "index.cjs"
     );
     
-    const HelloWorldModule = await import("file:///"+contractModulePath);
+    const fileUrl = path.isAbsolute(contractModulePath) ? new URL(`file://${contractModulePath}`).href : contractModulePath;
+    const HelloWorldModule = await import(fileUrl);
     
     const contractInstance = new HelloWorldModule.Contract(witnesses);
     
@@ -183,7 +184,7 @@ async function main() {
 
     const deployed = await deployContract(providers, {
       contract: contractInstance,
-      privateStateId: "helloWorldState",
+      privateStateId: "compliantsState",
       initialPrivateState: {},
     });
 
