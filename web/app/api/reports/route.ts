@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { submitReport } from '../../../utils/contract';
+import { submitReport } from '../../utils/contract';
 
 export async function POST(request: NextRequest) {
   try {

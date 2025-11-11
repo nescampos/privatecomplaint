@@ -138,7 +138,7 @@ async function main() {
     const fileUrl = path.isAbsolute(contractModulePath) ? new URL(`file://${contractModulePath}`).href : contractModulePath;
     const HelloWorldModule = await import(fileUrl);
     
-    const contractInstance = new HelloWorldModule.Contract(witnesses);
+    const contractInstance = new HelloWorldModule.Contract({});
     
 
     // Create wallet provider for transactions
