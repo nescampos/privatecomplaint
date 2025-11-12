@@ -53,6 +53,7 @@ Key features:
 - `npm run check-balance` - Check wallet balance
 - `npm run reset` - Reset all compiled/built files
 - `npm run clean` - Clean build artifacts
+- `npm run dev:web` - Run web app in development mode
 
 ### Environment Variables
 
