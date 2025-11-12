@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useWallet } from '../../../lib/wallet-context';
 
 export default function SubmitPage() {
 	const router = useRouter();
+	const { connected } = useWallet();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [form, setForm] = useState({
@@ -14,6 +16,13 @@ export default function SubmitPage() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		
+		// Verificar si la wallet está conectada antes de enviar
+		if (!connected) {
+			setError('Please connect your wallet before submitting a report.');
+			return;
+		}
+		
 		setIsSubmitting(true);
 		setError(null);
 		try {
@@ -90,10 +99,19 @@ export default function SubmitPage() {
 					<p className="mt-2 text-xs text-gray-500">Do not include personal identifiable information.</p>
 				</div>
 
+				{!connected && (
+					<div className="mb-4 text-sm text-yellow-700 bg-yellow-50 border border-yellow-200 rounded p-3">
+						Please connect your wallet to submit a report.
+					</div>
+				)}
 				<button
 					type="submit"
-					disabled={isSubmitting}
-					className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
+					disabled={isSubmitting || !connected}
+					className={`inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-white disabled:opacity-60 ${
+						connected && !isSubmitting 
+							? 'bg-blue-600 hover:bg-blue-700' 
+							: 'bg-gray-400 cursor-not-allowed'
+					}`}
 				>
 					{isSubmitting ? 'Submitting...' : 'Submit report'}
 				</button>
