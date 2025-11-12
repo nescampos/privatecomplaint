@@ -1,6 +1,16 @@
 # sunset
 
-A Midnight Network application created with `create-mn-app`.
+## About Sunset
+
+Sunset is an anonymous reporting platform that enables citizens to securely report corruption and misconduct in both public and private institutions. Built on the Midnight Network, the platform leverages zero-knowledge proofs and advanced privacy technology to protect the identity of whistleblowers while ensuring transparency and accountability.
+
+The application allows users to submit detailed reports about corrupt practices while keeping their identity completely anonymous. This helps promote integrity in institutions and enables a more transparent and just society without fear of retaliation against those who report wrongdoing.
+
+Key features:
+- Complete anonymity for reporters using cryptographic techniques
+- Secure storage of reports on blockchain with privacy preservation
+- Protection against retaliation through zero-knowledge technology
+- Support for reporting in both public institutions and private organizations
 
 ## Getting Started
 
@@ -24,7 +34,7 @@ A Midnight Network application created with `create-mn-app`.
 
    This will:
 
-   - Compile your Compact contract
+   - Compile the Compact contract (compliants.compact)
    - Build TypeScript to JavaScript
    - Deploy contract to the testnet
 
@@ -58,16 +68,18 @@ Copy `.env.example` to `.env` and configure:
 ```
 sunset/
 ├── contracts/
-│   ├── hello-world.compact    # Smart contract source
+│   ├── compliants.compact    # Smart contract source
 │   └── managed/               # Compiled artifacts
 ├── src/
 │   ├── deploy.ts             # Deployment script
-│   ├── cli.ts                # Interactive CLI
 │   ├── providers/            # Shared providers
 │   └── utils/                # Utility functions
+├── web/
+│   ├── app/                  # Next.js application
+│   └── components/           # Shared components
 ├── .env                      # Environment config (keep private!)
 ├── deployment.json           # Deployment info
-└── package.json
+└── package.json              # Project dependencies
 ```
 
 ### Getting Testnet Tokens
@@ -82,18 +94,5 @@ sunset/
 - [Compact Language Guide](https://docs.midnight.network/compact)
 - [Tutorial Series](https://docs.midnight.network/tutorials)
 
-## Contract Overview
-
-This project includes a simple "Hello World" contract that:
-
-- Stores a message on the blockchain
-- Allows reading the current message
-- Demonstrates basic Midnight functionality
-
-The contract uses:
-
-- **Public ledger state** for the message
-- **Zero-knowledge proofs** for transactions
-- **Privacy-preserving** architecture
 
 Happy coding! 🌙
