@@ -12,8 +12,8 @@ export type PrivateState = {
   readonly secretKey: Uint8Array; 
 };
 
-export const createPrivateState = (secretKey: Uint8Array) => ({
-   secretKey, 
+export const createPrivateState = () => ({
+   secretKey : process.env.WALLET_SEED!, 
 });
 
 export const witnesses = {

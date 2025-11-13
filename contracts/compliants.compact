@@ -2,60 +2,56 @@ pragma language_version >= 0.16 && <= 0.18;
 
 import CompactStandardLibrary;
 
+// The type of institution reported
 enum InstitutionType {
   PUBLIC,
   PRIVATE
 }
 
-//export ledger contralor: Bytes<32>;
+// The Counter of the reports
 export ledger reports: Counter;
+// The Map of the reports
 export ledger reportList: Map<Uint<64>,WhistleblowerNote>;
-//export ledger caseStatus: Map<Uint<64>, Opaque<"string">>;
-//export ledger feedbackList: Map<Uint<64>, FeedbackNote>;
 
+// The struct of the report
 struct WhistleblowerNote {
-    // ID público y único para rastrear la denuncia en el sistema del Contralor
+    // Public and unique ID to track the complaint in the system (via the Counter)
     report_id: Uint<64>; 
-    // Institución involucrada (puede ser un hash o un String corto)
+    // Institution involved (can be a hash or a short string)
     institution_name: Opaque<"string">; 
-    // Contenido detallado de la denuncia (el dato sensible y más largo)
+    // Report details (the data with all the details about the corruption case)
     report_details: Opaque<"string">; 
     institution_type: InstitutionType;
-    // Sello de tiempo (timestamp) de la presentación
+    // Timestamp of the presentation
     timestamp: Uint<64>;
+    // The public key of the informer (anonymous using the secret key and counter)
     informer: Bytes<32>;
 }
 
-struct FeedbackNote {
-    // Clave anónima del destinatario (la misma que informer_pk)
-    recipient_pk: Bytes<32>; 
-    // ID del reporte al que se refiere el feedback
-    report_id: Uint<64>; 
-    // Mensaje de feedback del Contralor
-    message: Opaque<"string">; 
-}
-
+// Constructor
 constructor() {
-  //const current_report: Uint<64> = reports.read(); 
-  //contralor = disclose(publicKey(current_report,sk));
+
 }
 
+// Function to generate the public key of the informer (anonymous using the secret key and counter)
 circuit publicKey(reports: Field, sk: Bytes<32>): Bytes<32> {
   return persistentHash<Vector<3, Bytes<32>>>(
            [pad(32, "midnight:compliants:lock:pk"), reports as Bytes<32>, sk]);
 }
 
+// The secret key of the informer (anonymous)
 witness secretKey(): Bytes<32>;
 
+// Function to submit a report
 export circuit submitReport(institution_name: Opaque<"string">, details: Opaque<"string">, institution_type: InstitutionType, current_timestamp: Uint<64>): Boolean {
     
-    // El timestamp se toma del contexto de la transacción (opcional, dependiendo de la SDK)
-    const current_report: Uint<64> = reports.read(); 
-    //const current_timestamp: Uint<64> = getCurrentTime();
+    // Get the current report ID to assign
+    const current_report: Uint<64> = reports.read();
 
+    // Get the secret key of the informer
     const sk_informer = secretKey();
 
-    // Crea la nota de denuncia
+    // Create the report with all the details
     const newReport: WhistleblowerNote = WhistleblowerNote {
         report_id: current_report,
         institution_name: disclose(institution_name),
@@ -71,11 +67,13 @@ export circuit submitReport(institution_name: Opaque<"string">, details: Opaque<
     return true;
 }
 
+// Function to get a report by ID to see all the information
 export circuit getReport(report_id: Uint<64>): WhistleblowerNote {
     const report : WhistleblowerNote = reportList.lookup(disclose(report_id));
     return report;
 }
 
+// Function to verify if the informer is the one who submitted the report in case the justice wants to verify (selective privacy)
 export circuit validateInformer(report_id: Uint<64>): Boolean {
     const sk = secretKey();
     const pk = publicKey(report_id, sk);
@@ -83,43 +81,3 @@ export circuit validateInformer(report_id: Uint<64>): Boolean {
     assert(report.informer == disclose(pk), "Invalid informer identity");
     return true;
 }
-
-// export circuit updateCaseStatus(report_id: Uint<64>, new_status: Opaque<"string">): Boolean {
-//     const sk_contralor = secretKey();
-
-//     const contralorPK = disclose(publicKey(0, sk_contralor));
-//     assert(contralor == contralorPK, "Access denied: Only the Contralor can update case status");
-
-//     caseStatus.insert(disclose(report_id), disclose(new_status));
-//     return true;
-// }
-
-// export circuit sendFeedback(report_id: Uint<64>, feedback_message: Opaque<"string">): Boolean {
-//     const sk_contralor = secretKey();
-
-//     const contralorPK = disclose(publicKey(0, sk_contralor));
-
-//     assert(contralor == contralorPK, "Access denied: Only the Contralor can send feedback.");
-    
-//     const report: WhistleblowerNote = reportList.lookup(disclose(report_id));
-//     const recipient_pk: Bytes<32> = report.informer;
-    
-//     const newFeedback: FeedbackNote = FeedbackNote {
-//         recipient_pk: recipient_pk,
-//         report_id: report.report_id,
-//         message: feedback_message,
-//     };
-//     feedbackList.insert(disclose(report_id), disclose(newFeedback));
-    
-//     return true;
-// }
-
-// export circuit readFeedback(report_id: Uint<64>): Opaque<"string"> {
-//     const sk = secretKey();
-//     const pk = publicKey(report_id, sk);
-//     const report : WhistleblowerNote = reportList.lookup(disclose(report_id));
-//     assert(report.informer == disclose(pk), "Invalid informer identity");
-
-//     const feedback_note: FeedbackNote = feedbackList.lookup(disclose(report_id));
-//     return feedback_note.message;
-// }
