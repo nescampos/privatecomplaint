@@ -1,5 +1,7 @@
 # Sunset
 
+![First page](/screenshots/Image1.png)
+
 ## About Sunset
 
 Sunset is an anonymous reporting platform that enables citizens to securely report corruption and misconduct in both public and private institutions. Built on the Midnight Network, the platform leverages zero-knowledge proofs and advanced privacy technology to protect the identity of whistleblowers while ensuring transparency and accountability.
@@ -12,10 +14,13 @@ Key features:
 - Protection against retaliation through zero-knowledge technology
 - Support for reporting in both public institutions and private organizations
 
+![Dashboard](/screenshots/Image2.png)
+
 
 ## Available functions
 
 1. Submit reports: Any whistleblower can enter all the necessary information: type of institution (public or private), the name of the institution, and the details of the complaint. The date is calculated automatically, as is the ID, and a public key for the whistleblower (without traceability to their secret key, ensuring privacy and security in the complaint).
+![Submit report](/screenshots/Image3.png)
 2. View reports: Review all the complaints/reports made.
 3. View report details: Review the details of a specific report.
 4. View report ownership: The person who filed the complaint/report can verify themselves in order to confirm it to the court if required.
