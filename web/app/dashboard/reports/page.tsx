@@ -45,7 +45,7 @@ export default function ReportsPage() {
 				<h2 className="text-lg font-semibold text-red-600 mb-2">Error</h2>
 				<p className="text-sm text-gray-600 mb-4">{error}</p>
 				<button
-					className="px-3 py-2 text-sm rounded bg-blue-600 text-white"
+					className="px-3 py-2 text-sm rounded bg-blue-200 text-black hover:bg-blue-300"
 					onClick={() => location.reload()}
 				>
 					Retry
@@ -63,7 +63,7 @@ export default function ReportsPage() {
 				</div>
 				<Link
 					href="/dashboard/submit"
-					className="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+					className="inline-flex items-center rounded-md bg-blue-200 px-3 py-2 text-sm font-medium text-black hover:bg-blue-300"
 				>
 					Submit a report
 				</Link>

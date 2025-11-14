@@ -272,6 +272,32 @@ app.post('/api/contralor/send-feedback', async (req, res) => {
   }
 });
 
+app.post('/api/contralor/validate-informer', async (req, res) => {
+  try {
+    const { report_id } = req.body;
+
+    if (!deployedContractInstance) {
+      throw new Error('Contract not initialized');
+    }
+
+    if (!report_id || isNaN(report_id)) {
+      throw new Error('Invalid report ID');
+    }
+
+    // Call the validateInformer method on the contract
+    const isValid: boolean = await deployedContractInstance.callTx.validateInformer(report_id);
+
+    res.json({
+      isValid,
+      reportId: report_id,
+      message: isValid ? 'Verification successful' : 'Verification failed - you are not the owner of this report'
+    });
+  } catch (error: any) {
+    console.error('Error validating informer:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Serve the main page and deployment file
 app.get('/', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'web', 'index.html'));

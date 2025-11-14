@@ -23,7 +23,7 @@ export default function ConnectWalletButton() {
             <button
                 type="button"
                 onClick={handleClick} // Call connect handler
-                className="ml-auto m-2 px-2 py-1 rounded-2xl bg-black text-white"
+                className="ml-auto m-2 px-2 py-1 rounded-2xl bg-black text-black"
             >
                 {connected ? "Connected" : "Connect Wallet"} {/* Change text based on state */}
             </button>

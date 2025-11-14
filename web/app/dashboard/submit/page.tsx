@@ -107,7 +107,7 @@ export default function SubmitPage() {
 				<button
 					type="submit"
 					disabled={isSubmitting || !connected}
-					className={`inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-white disabled:opacity-60 ${
+					className={`inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-black disabled:opacity-60 ${
 						connected && !isSubmitting 
 							? 'bg-blue-600 hover:bg-blue-700' 
 							: 'bg-gray-400 cursor-not-allowed'
