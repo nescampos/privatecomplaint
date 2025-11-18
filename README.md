@@ -127,11 +127,11 @@ sunset/
 ```
 
 ### Contributors
-[@techmartins](https://github.com/techmartins)
-[@codebigint](https://github.com/codebigint)
-[@musalawal](https://github.com/musalawal)
-[@nescampos](https://github.com/nescampos)
-[@scisamir](https://github.com/scisamir)
+- [@techmartins](https://github.com/TechMartins72)
+- [@codebigint](https://github.com/codeBigInt)
+- [@musalawal](https://github.com/musalawal04)
+- [@nescampos](https://github.com/nescampos)
+- [@scisamir](https://github.com/scisamir)
 
 ## License
 
