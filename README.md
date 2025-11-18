@@ -126,6 +126,13 @@ sunset/
 └── package.json              # Project dependencies
 ```
 
+### Contributors
+[@techmartins](https://github.com/techmartins)
+[@codebigint](https://github.com/codebigint)
+[@musalawal](https://github.com/musalawal)
+[@nescampos](https://github.com/nescampos)
+[@scisamir](https://github.com/scisamir)
+
 ## License
 
 MIT
